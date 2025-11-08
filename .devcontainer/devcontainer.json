@@ -1,0 +1,14 @@
+{
+  "name": "bico_ubuntu_tcp",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".",
+    "args": {}
+  },
+  // Container runtime configuration
+  "runArgs": [
+    "--name", "bico_ubuntu_tcp",
+    // "--privileged",
+    // "--network", "host",
+  ],
+}

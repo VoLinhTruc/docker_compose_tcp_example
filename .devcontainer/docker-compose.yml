@@ -1,0 +1,97 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # stdin_open: true # docker run -i
+    # tty: true        # docker run -t
+    container_name: tcp_server
+    working_dir: /workspaces/docker_compose_tcp_example/src/tcp_server
+    command: ["python3", "server.py"]
+    ports:
+      - "5000:5000"
+    networks:
+      - tcpnet
+    volumes:
+      - ../src/tcp_server:/workspaces/docker_compose_tcp_example/src/tcp_server
+      - ../src/tcp_server/client_data:/workspaces/docker_compose_tcp_example/src/tcp_server/client_data
+
+  client1:
+    image: ghcr.io/volinhtruc/bico_ubuntu:22.04_0.0.0
+    container_name: tcp_client1
+    working_dir: /workspaces/docker_compose_tcp_example/src/tcp_client
+    command: ["python3", "client.py"]
+    depends_on:
+      - server
+    networks:
+      - tcpnet
+    volumes:
+      - ../src/tcp_client:/workspaces/docker_compose_tcp_example/src/tcp_client
+    environment:
+      - CLIENT_NAME=tcp_client1
+
+  client2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tcp_client2
+    working_dir: /workspaces/docker_compose_tcp_example/src/tcp_client
+    command: ["python3", "client.py"]
+    depends_on:
+      - server
+    networks:
+      - tcpnet
+    volumes:
+      - ../src/tcp_client:/workspaces/docker_compose_tcp_example/src/tcp_client
+    environment:
+      - CLIENT_NAME=tcp_client2
+
+  client3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tcp_client3
+    working_dir: /workspaces/docker_compose_tcp_example/src/tcp_client
+    command: ["python3", "client.py"]
+    depends_on:
+      - server
+    networks:
+      - tcpnet
+    volumes:
+      - ../src/tcp_client:/workspaces/docker_compose_tcp_example/src/tcp_client
+    environment:
+      - CLIENT_NAME=tcp_client3
+
+  client4:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tcp_client4
+    working_dir: /workspaces/docker_compose_tcp_example/src/tcp_client
+    command: ["python3", "client.py"]
+    depends_on:
+      - server
+    networks:
+      - tcpnet
+    volumes:
+      - ../src/tcp_client:/workspaces/docker_compose_tcp_example/src/tcp_client
+    environment:
+      - CLIENT_NAME=tcp_client4
+
+  client5:
+    image: ghcr.io/volinhtruc/bico_ubuntu:22.04_0.0.0
+    container_name: tcp_client5
+    working_dir: /workspaces/docker_compose_tcp_example/src/tcp_client
+    command: ["python3", "client.py"]
+    depends_on:
+      - server
+    networks:
+      - tcpnet
+    volumes:
+      - ../src/tcp_client:/workspaces/docker_compose_tcp_example/src/tcp_client
+    environment:
+      - CLIENT_NAME=tcp_client5
+
+networks:
+  tcpnet:
+    driver: bridge
